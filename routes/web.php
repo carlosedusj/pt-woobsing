@@ -68,7 +68,7 @@ Route::group(['prefix' => 'R4'], function (){
  */
 Route::group([
     'prefix'     => 'R5',
-    'middleware' => 'auth'
+    'middleware' => ['auth','one.day.logged']
 ],function(){
     Route::get('/validacion',[ValidacionController::class, 'index'])->name('validacion');
     Route::post('/validar',[ValidacionController::class, 'validar'])->name('validar');
@@ -78,8 +78,7 @@ Route::group([
 /**
  * rutas por defecto, auth laravel scaffolding
  */
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::fallback();

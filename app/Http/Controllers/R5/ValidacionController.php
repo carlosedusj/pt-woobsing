@@ -17,7 +17,7 @@ class ValidacionController extends Controller
      */
     public function index()
     {
-        if(!is_null(auth()->user()->email_verified_at)) return redirect('/home');
+        if(!is_null(auth()?->user()?->email_verified_at)) return redirect('/home');
         return view('R5.validacion');
     }
 
