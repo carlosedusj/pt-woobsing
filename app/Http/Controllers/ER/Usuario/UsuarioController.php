@@ -35,13 +35,9 @@ class UsuarioController extends Controller
      */
     public function usuariosRole()
     {
-        return response()->json([
-            'SUCCESS' => true,
-            'code'    => 200,
-            'data'    => [
-                'usuarios con rol 1 y 2' => $this->usuarioRepository->usuarioRole()
-            ]
-        ]);
+        $usuarios = $this->usuarioRepository->usuarioRole();
+
+        return view('R1.usuariosRole',compact('usuarios'));
     }
 
     /**
@@ -50,12 +46,8 @@ class UsuarioController extends Controller
      */
     public function usuariosRolesPermiso()
     {
-        return response()->json([
-            'SUCCESS' => true,
-            'code'    => 200,
-            'data'    => [
-                'usuarios y roles con permiso 2' => $this->usuarioRepository->usuariosRolesPermiso()
-            ]
-        ]);
+        $usuarios = $this->usuarioRepository->usuariosRolesPermiso();
+
+        return view('R1.usuariosRolesPermiso',compact('usuarios'));
     }
 }

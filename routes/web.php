@@ -22,7 +22,10 @@ Route::redirect('/', '/login');
 /**
  * respuestas practicas de pregunta 1
  */
-Route::group(['prefix' => 'R1' ],function(){
+Route::group([
+    'prefix'     => 'R1',
+    'middleware' => ['auth','email.no.verified.at','one.day.logged']
+],function(){
     /**
      * obtener todos los usuarios
     */
@@ -33,7 +36,7 @@ Route::group(['prefix' => 'R1' ],function(){
      * Sql :
      * SELECT * FROM usuarios WHERE role_id IN (1,2);
      */
-    Route::get('usuarios/role/',[UsuarioController::class, 'usuariosRole']);
+    Route::get('usuarios/role/',[UsuarioController::class, 'usuariosRole'])->name('usuarios.role');
 
     /**
      * permisos del rol 1
@@ -42,7 +45,7 @@ Route::group(['prefix' => 'R1' ],function(){
      * INNER JOIN permiso_role pr ON p.id = pr.permiso_id 
      * WHERE pr.role_id = 1;
      */
-    Route::get('permisos/roles/',[PermisoController::class,'permisosRole']);
+    Route::get('permisos/roles/',[PermisoController::class,'permisosRole'])->name('permisos.roles');
 
     /**
      * usuarios y role con permiso 2
@@ -53,7 +56,7 @@ Route::group(['prefix' => 'R1' ],function(){
      * INNER JOIN permiso_role pr on r.id = pr.role_id 
      * AND pr.permiso_id = 2;
      */
-    Route::get('usuarios/roles/permisos/',[UsuarioController::class, 'usuariosRolesPermiso']);
+    Route::get('usuarios/roles/permisos/',[UsuarioController::class, 'usuariosRolesPermiso'])->name('usuarios.roles.permisos');
 });
 
 /**

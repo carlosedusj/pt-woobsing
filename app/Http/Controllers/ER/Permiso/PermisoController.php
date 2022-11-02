@@ -36,13 +36,8 @@ class PermisoController extends Controller
      */
     public function permisosRole()
     {
-        return response()->json([
-            'SUCCESS' => true,
-            'code'    => 200,
-            'data'    => [
-                'permisos del rol 1' => $this->permisoRepository->permisosRole()
-            ]
-        ]);    
+        $permisos = $this->permisoRepository->permisosRole();
+        return view('R1.permisosRole',compact('permisos'));
     }
 
 }

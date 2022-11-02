@@ -12,7 +12,6 @@ class Role extends Model
     use HasFactory;
 
     protected $table = 'roles';
-    protected $hidden = ['pivot'];
 
     /**
      * usuarios relationship
@@ -29,7 +28,7 @@ class Role extends Model
      */
     public function permisos()
     {
-        return $this->belongsToMany(Permiso::class,'permiso_role')->withTimestamps();
+        return $this->belongsToMany(Permiso::class,'permiso_role')->withPivot('role_id')->withTimestamps();
     }
 
     /**
@@ -38,6 +37,6 @@ class Role extends Model
      */
     public function roleWithSecondPermission()
     {
-        return $this->belongsToMany(Permiso::class,'permiso_role')->where('permiso_id',2);
+        return $this->belongsToMany(Permiso::class,'permiso_role')->with('permisos')->where('permiso_id',2);
     }
 }
