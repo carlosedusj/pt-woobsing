@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Listener\Auth;
+
+use Illuminate\Auth\Events\Login;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+
+class LastLoginListener
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  \Illuminate\Auth\Events\Login  $event
+     * @return void
+     */
+    public function handle(Login $event)
+    {
+        $event->user->last_login = new \DateTime();
+        $event->user->save();
+    }
+}
