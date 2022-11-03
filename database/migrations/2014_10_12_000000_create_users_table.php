@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('last_login')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->text('google2fa_secret');
             $table->rememberToken();
             $table->timestamps();
         });

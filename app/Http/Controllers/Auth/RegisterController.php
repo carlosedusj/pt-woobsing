@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Components\GoogleAuthenticator\Google2faComponent;
+
 
 class RegisterController extends Controller
 {
@@ -22,7 +25,10 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    /**creamos el alias para no sobrescribir la funcion register en el trait */
+    use RegistersUsers {
+          register as registration;
+    }
 
     /**
      * Where to redirect users after registration.
@@ -36,9 +42,33 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(protected Google2faComponent $google2faComponent)
     {
         $this->middleware('guest');
+    }
+
+    public function register(Request $request)
+    {
+       $this->validator($data = $request->all())->validate();
+       
+       /**generamos valores qr y key */
+       $values = $this->google2faComponent->run($data['email']);
+       
+       /**agregamos el key al request */
+       $data['google2fa_secret'] = $this->google2faComponent->getSecretKey();
+
+       /**mantiene la data en request para el registro en sistema despues del 2fa */
+       $request->session()->flash('data', $data);
+
+        return view('google2fa.register',$values);
+    }
+
+    public function completeRegistration(Request $request)
+    {        
+        /**agregar la data insertada anteriormente en la session al request */
+        $request->merge(session('data'));
+        /**continuar con el registro */
+        return $this->registration($request);
     }
 
     /**
@@ -70,6 +100,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id'  => $data['role_id'],
+            'google2fa_secret' => $data['google2fa_secret'],
         ]);
     }
 }

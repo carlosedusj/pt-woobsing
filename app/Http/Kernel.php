@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'email.no.verified.at' => \App\Http\Middleware\Custom\isNotVerifiedAt::class,
         'one.day.logged' => \App\Http\Middleware\Custom\OneDayLogged::class,
         'one.role.cookie' => \App\Http\Middleware\Custom\CreateCookie::class,
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
     ];
 }

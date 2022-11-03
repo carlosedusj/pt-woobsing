@@ -62,7 +62,10 @@ Route::group([
 /**
  * repuesta practica pregunta 4
  */
-Route::group(['prefix' => 'R4'], function (){
+Route::group([
+    'prefix' => 'R4',
+    'middleware' => ['auth','email.no.verified.at','one.day.logged']
+], function (){
     Route::get('solucion', SolucionController::class);
 });
 
@@ -71,17 +74,33 @@ Route::group(['prefix' => 'R4'], function (){
  */
 Route::group([
     'prefix'     => 'R5',
-    'middleware' => ['auth','one.day.logged']
+    'middleware' => ['auth','one.day.logged','2fa']
 ],function(){
     Route::get('/validacion',[ValidacionController::class, 'index'])->name('validacion');
     Route::post('/validar',[ValidacionController::class, 'validar'])->name('validar');
 });
+
+/**
+ * validacion del 2fa
+ */
+Route::group([
+    'middleware' => '2fa'
+],function(){
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+    /**
+     * verifica validez del codigo OTP en el middleware al hacer post con formulario
+     */
+    Route::post('/2fa', function () {
+        return redirect(route('home'));
+    })->name('2fa')->middleware('2fa');
+});
+
+Route::get('/completar-registro', [App\Http\Controllers\Auth\RegisterController::class, 'completeRegistration'])->name('completar.registro');
 
 
 /**
  * rutas por defecto, auth laravel scaffolding
  */
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::fallback();

@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','email.no.verified.at','one.day.logged','one.role.cookie']);
+        $this->middleware(['auth','email.no.verified.at','one.day.logged','one.role.cookie','2fa']);
     }
 
     /**

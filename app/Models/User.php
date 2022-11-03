@@ -25,6 +25,7 @@ class User extends Authenticatable
         'last_login',
         'role_id',
         'password',
+        'google2fa_secret'
     ];
 
     protected $attributes = [
@@ -39,6 +40,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google2fa_secret',
     ];
 
     /**
@@ -57,5 +59,15 @@ class User extends Authenticatable
     public function role()
     {
         $this->belongsTo(Role::class);
+    }
+
+    public function setGoogle2faSecretAttribute($value)
+    {
+         $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
     }
 }

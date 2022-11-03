@@ -49,20 +49,18 @@
                                 </li>
                             @endif
                         @else
-
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Respuestas 1
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link" href="{{ route('usuarios.role') }}">{{ __('Usuarios con role 1 y 2') }}</a>
-                                    <a class="nav-link" href="{{ route('permisos.roles') }}">{{ __('Permisos del rol 1') }}</a>
-                                    <a class="nav-link" href="{{ route('usuarios.roles.permisos') }}">{{ __('usuarios y role con permiso 2') }}</a>
-
-                                </div>
-                            </li>
-                            
+                            @if(auth()->user()->email_verified_at)
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Respuestas 1
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="nav-link" href="{{ route('usuarios.role') }}">{{ __('Usuarios con role 1 y 2') }}</a>
+                                        <a class="nav-link" href="{{ route('permisos.roles') }}">{{ __('Permisos del rol 1') }}</a>
+                                        <a class="nav-link" href="{{ route('usuarios.roles.permisos') }}">{{ __('usuarios y role con permiso 2') }}</a>
+                                    </div>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
