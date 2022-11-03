@@ -1,5 +1,13 @@
-# Comenzamos!
+# PT-woobsing Laravel 9.37.0
 
+## IMPORTANTE
+Este proyecto funciona en una version de php 8.1.9
+
+## Aclaratoria
+El codigo escrito en esta prueba esta elaborado exclusivamente para la resolucion misma. Se utilizaron herramientas para agilizar el proceso como el scaffolding
+laravel/ui, aprovechando sus bondades,ya que nos permite, registrar y autenticar usuarios de una manera facil y rapida. Genero plantillas para las funciones
+mencionadas anteriormente, aunque existen mejores opciones como VueJS o React. La migracion del tabla users sufrio ajustes para trabajar con el 2FA de google.
+Cualquier sugerencia estare atento por carlosedusj12@gmail.com
 ## Instalacion
 
 Clona el repositorio
@@ -71,4 +79,4 @@ puedes acceder en http://localhost:8000
 - `database/seeds/ER` - Contiene un seeder que alimenta las tablas roles y permisos
 - `routes` - Todas las rutas se encuentran en web.php (contiene comentada las respuestas SQL. Las R(numero) identifica que respuesta de la prueba responde)
 
-
+## 
